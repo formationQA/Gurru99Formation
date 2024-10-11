@@ -1,6 +1,7 @@
 package Steps;
 
 import Driver.Setup;
+import PageObject.GurroPage;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.fr.Et;
@@ -14,14 +15,16 @@ import java.util.Date;
 public class CommunsSteps  {
     private Scenario scenario;
     private static WebDriver driver;
-
     private static Utils utils;
+
+    private static GurroPage gurro;
 
     @Before
     public void setUp() {
         // Initialisation du WebDriver pour Chrome
         driver = Setup.getDriver();
         utils = new Utils();
+        gurro = new GurroPage(driver);
     }
 
     @io.cucumber.java.Before
@@ -48,4 +51,30 @@ public class CommunsSteps  {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
+
+    @Et("le titre de la page est (.*)$")
+    public void ComparerTitre (String titre){
+    gurro.GetTitre(titre);
+    }
+
+    @Et("ce qui est demande est bien affiché$")
+    public void AfficherTexte1 (){
+        gurro.GetText();
+    }
+
+    @Et("je clique sur mobile$")
+    public void cliquermonile (){
+        gurro.CliquerMobile();
+    }
+
+    @Et("je recupere le titre mobile$")
+    public void getMobileText (){
+        gurro.VerifTitle();
+    }
+
+    @Et("je selectionne le type (Name|Position|Price)$")
+    public void selectionnertype (String value){
+        gurro.SelectionnerParNom(value);
+    }
+
 }
